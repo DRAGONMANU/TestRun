@@ -233,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
     public void connectToDevice(BluetoothDevice device) {
         Log.d("device","connected");
         mGatt = device.connectGatt(this, false, mGattCallback);
-        sendToBackEnd(1);
         //BTAdapter.cancelDiscovery();
     }
 
@@ -249,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.e("gattCallback", "STATE_CONNECTED");
                     gatt.discoverServices();
+                    sendToBackEnd(1);
                     break;
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.e("gattCallback", "STATE_DISCONNECTED");
@@ -353,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendToBackEnd(final int i) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://192.168.0.103:3000/room",
+                "http://192.168.0.102:3000/room",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
